@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{font-size: 12px; font-family: Verdana, Geneva, Tahoma, sans-serif;}
+        .tblTitle{background-color:#E4E5E9; font-weight: bold;padding: 10px;}
+        .tblContent{background-color: white;padding: 10px;}
+        input[type='text']{border: 1px solid red;}
+        input[type=button],input[type=reset]{border: 1px solid gray;}
+        input[type=submit]{border: 1px solid red;}
+        .btn1{background-color: black;color: white;}
+        .btn2{background-color: #E70E16;width: 120px;height: 30px;font-weight: bold;
+            cursor: pointer;color: white;}
+        .btn3{background-color: #464646;width: 120px;height: 30px;font-weight: bold;
+            cursor: pointer;color: white;}
+        .required:first-letter{color:red;}
+    </style>
+</head>
+<body>
+    <h2>회원가입폼 만들기</h2>
+    <div style="width: 670px;text-align: right;" class="required">*필수입력(div)</div>
+    <table border=0 width=670>
+        <tr>
+            <td style="text-align: right;">
+                *필수입력(table)
+            </td>
+        </tr>
+    </table>
+    <table border=0 width=670 style="background-color:silver; border-spacing: 1px;">
+        <colgroup>
+            <col width="20%">
+            <col width="80%">
+        </colgroup>
+        <tr>
+            <td class="tblTitle">
+               <span style="color: red;">*</span>아이디
+            </td>
+            <td class="tblContent">
+                <input type="text" size="15">
+                <input type="button" value="중복확인" class="btn1">
+                <button type="button">중복확인</button>
+                + 4~15자, 첫 영문자, 영문자와 숫자 조합
+            </td>
+        </tr>
+        <tr>
+            <td class="tblTitle">
+               <span style="color: red;">*</span>비밀번호
+            </td>
+            <td class="tblContent">
+                <input type="text" size="12">
+            </td>
+        </tr>
+        <tr>
+            <td class="tblTitle">
+               <span style="color: red;">*</span>이름
+            </td>
+            <td class="tblContent">
+                <input type="text" size="15">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tblTitle">
+               <span style="color: red;">*</span>관심분야
+            </td>
+            <td class="tblContent">
+                <select style="width: 300px;border: 1px solid silver;">
+                    <option value="">::: 관심분야 선택 :::</option>
+                    <option value=""></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tblTitle">
+               <span style="color: red;">*</span>생년월일
+            </td>
+            <td class="tblContent">
+                <input type="radio" name="" id="">남자
+                <input type="radio" name="" id="">여자
+                &nbsp;&nbsp;&nbsp;
+                <input type="text" size="4">년
+                <input type="text" size="2">월
+                <input type="text" size="2">일
+            </td>
+        </tr>
+         
+        <tr>
+            <td class="tblTitle" rowspan="3">
+               <span style="color: red;">*</span>주소
+            </td>
+            <td class="tblContent">
+                <input type="button" value="우편번호" class="btn1">
+                <input type="text" size="5">
+            </td>
+        </tr>
+        <tr>
+            <td class="tblContent">
+                <input type="text" size="50">
+            </td>
+        </tr>
+        <tr>
+            <td class="tblContent">
+                <input type="text" size="45">
+            </td>
+        </tr>
+    </table>
+    <table border=0 width=670>
+        <tr>
+            <td style="text-align: center;">
+                <input type="submit" value="등록하기" class="btn2">
+                <input type="reset" value="다시쓰기" class="btn3">
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="submit" value="등록하기">
+                <input type="reset" value="다시쓰기">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
