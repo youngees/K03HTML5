@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J08Function01.html</title>
+    <script>
+        function noParamNoReturn() {
+            document.write("====메뉴====<br/>");
+            document.write("1.계속 2.나가기<br/>");
+            document.write("==============<br/><br/>");
+        }
+        noParamNoReturn();
+
+        var yesParamNoReturn = function(Start,end) {
+            var sum = 0;
+            for(var i =start ; i<=end ; i++) {
+                sum += i;
+            }
+            document.write(start +"부터 "+end+"까지의 합:"+sum+"<br/>");
+        }
+        yesParamNoReturn(1,10);
+        yesParamNoReturn(1,100);
+        yesParamNoReturn(1,1000);
+        
+        var noParamNoReturn = function() {
+            var name = prompt("이름을 입력하세요.","");
+            var age = prompt("나이를 입력하세요.","20");
+
+            return name +"은(는)"+age+" 살입니다.<br/>";
+
+            document.write("return문 이후 출력문");
+        }
+        var yesParamNoReturn = function(num1, num2){
+            return num1>num2 ? num1 : num2;
+        }
+        document.write("큰수는?"+yesParamNoReturn(10,20));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
