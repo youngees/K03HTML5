@@ -10,13 +10,31 @@
     <h2>숫자의 첫째자리와 마지막 자리가 같은지 비교</h2>
     <hr>
     <script>
-        var lastNum = num % 10; //숫자의 마지막 자리 구함
-        //숫자의 첫번째 자리 구하기 위한 while문
-        while(1) {
+        //prompt를 통해 입력받으면 무조건 문자로 반환됨
+        var str = prompt("숫자를 입력하세요.", 0);
+
+        var num = parseInt(str);//숫자로 변경
+        var lastNum = num % 10; //숫자의 마지막 자리(10으로 나누면 1의 자리가 남게됨)
+        var firstNum = 0;//숫자의 첫번째 자리(숫자는 0으로 시작할 수 없으므로 0으로 초기화)
+        
+        //사용자가 입력한 숫자에 따라 반복횟수가 달라지므로 while문을 선택
+        while(num>0) { //숫자가 0보다 클때까지만 반복
+            //입력받은 숫자를 firstNum에 먼저 대입(사용자의 입력이 한자리일수도 있으므로)
+            firstNum = num;
+            /*
+            숫자를 10으로 나눈 후 소수점 이하를 버린다.
+            1234 / 10  = 123.4 => 소수점이하 버림처리 = > 123
+            이런방식으로 한자리씩 줄이고, 마지막에서 0.1을 버림처리해서 0이 된다. 
+            이때 반복문을 탈출한다.
+            */
             num = Math.floor(num/10); //Math.floor(5678/10) = 567
         }
-
-       
+        if(firstNum==lastNum) {
+            document.write(str+"=>처음과 끝이 같음");
+        }
+        else {
+            document.write(str+"=>처음과 끝이 다름");
+        }
     </script>
 </body>
 </html>

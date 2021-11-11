@@ -8,15 +8,40 @@
 </head>
 <body>
     <script>
-        //big 함수작성
+        
         function big(num1, num2) {
             return num1>num2 ? num1 : num2;
         }
+
+        //선생님버전 (아래 2개)
+
+        //if문을 통한 구현
+        // function big(n1, n2) {
+        //     if(parseInt(n1) > parseInt(n2)){
+        //         return n1;
+        //     }
+        //     else {
+        //         return n2;
+        //     }
+        // }
+
+        //삼항연산자를 통한 구현
+        // var big2 = function(num1, num2){
+        //     //(조건) ? 참일때 : 거짓일때
+        //     var result = (parseInt(n1) > parseInt(n2)) ? num1 : num2;
+        //     return result;
+        // }
     </script>
     
     <script>
         var b = big("625", "555");
         document.write("큰수=",b);
+
+        document.write("<br/>");
+
+        // var b2 = big2("625", "555");
+        // document.write("큰수="+b2);
+
     </script>
 </body>
 </html>
