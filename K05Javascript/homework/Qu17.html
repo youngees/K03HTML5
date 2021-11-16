@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qu17.html</title>
+    <style>
+        span {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        function magic() {
+            var maArr = document.getElementsByTagName("span");
+            for(var i=0 ; i<maArr.length ; i++){
+                var ma = maArr[i];
+                var style = window.getComputedStyle(ma);
+                var m = style.getPropertyValue("visibility");
+                if(m == "hidden")
+                    ma.style.visibility = "visible";
+                else 
+                    ma.style.visibility = "hidden";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>다음 빈 곳에 숨은 단어?
+    <button onclick="magic();">show/hide</button>
+    </h2>
+    <hr>
+    <ul>
+        <li>I (<span>love</span>) you.
+        <li>CSS is Cascading (<span>Style</span>) Sheet.
+        <li>응답하라 (<span>1988</span>).
+    </ul>       
+</body>
+</html>
