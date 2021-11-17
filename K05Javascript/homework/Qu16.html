@@ -7,12 +7,16 @@
     <title>Qu16.html</title>
     <script>
         function setBorder() {
-            var set = document.getElementById("myPara");
-            set.style.border = "3px double gray";
-        }
-        function setP() {
             var ms = document.getElementById("mySpan");
             ms.style.border = "2px dotted violet";
+        }
+        var setP = function() {
+            //document.getElementById("myPara").style.border = "3px double gray";
+
+            //아래와 같이 개별속성을 통해서도 적용할 수 있다.
+            document.getElementById("myPara").style.borderColor = 'gray';
+            document.getElementById("myPara").style.borderStyle = 'double';
+            document.getElementById("myPara").style.borderWidth = '3px';
         }
     </script>
 </head>

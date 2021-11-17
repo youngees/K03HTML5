@@ -6,18 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qu20.html</title>
     <script>
-    window.onblur = function() {
-        document.body.style.backgroundColor = "gray";
+    // window.onblur = function() {
+    //     document.body.style.backgroundColor = "gray";
+    // }
+    // window.onfocus = function() {
+    //     document.body.style.backgroundColor = "white";
+    // }
+
+    //T.ver
+    //전역변수
+    var allWrap;
+    //반드시 문서의 로드가 끝난 이후 DOM을 얻어와야 한다.
+    window.onload = function () {
+        allWrap = document.getElementById("AllWrap");
     }
-    window.onfocus = function() {
-        document.body.style.backgroundColor = "white";
+    window.onfocus = function () {
+        allWrap.style.backgroundColor = "white";
+        //창을 잡는순간 포커스가 이동된다. 
+        document.frm.user_id.focus();
+    }
+    window.onblur = function() {
+        allWrap.style.backgroundColor = "gray";
     }
     </script>
 </head>
-<body>
+<body id="AllWrap"> 
     <h2>포커스와 onblur, onfocus</h2>   
     <hr>
     브라우저 바깥에 마우스를 클릭하면 window객체에 blur이벤트가 발생하고
     다시 마우스를 클릭하면 window객체에 focus이벤트가 발생한다.
+
+    <form name="frm">
+        아이디 : <input type="text" name="user_id" size="20">
+    </form>
 </body>
 </html>
