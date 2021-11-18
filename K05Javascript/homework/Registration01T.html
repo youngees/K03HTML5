@@ -20,11 +20,120 @@
         .btn_cancel{width:120px;height:28px;font-weight:bold;cursor:pointer;background-color: #464646;color:white;font-size: 14px;}
         .w20{width:20px;} .w30{width:30px;} .w40{width:40px;} .w50{width:50px;} .w100{width:100px;} 
         .w300{width:300px;} .w510{width:510px;} .w410{width:410px;} 
-        #id_loading{position:absolute;top:530px;z-index:10;width:100%;text-align:center;display:block;}
+        #id_loading{position:absolute;top:530px;z-index:10;width:100%;text-align:center;display:none;}
     </style>
+    <script>
+        function formValidate(frm) {
+            //아이디 입력값이 있는지 검증
+            if(frm.id.value=='') {alert("아이디를 입력해주세요.");frm.id.focus();return false;}
+            //패스워드 입력 및 일치여부 검증
+            if(frm.pass1.value=='') {alert("패스워드를 입력해주세요.");frm.pass1.focus();return false;}
+            if(frm.pass2.value=='') {alert("패스워드2를 입력해주세요.");frm.pass2.focus();return false;}
+            if(frm.pass1.value!=frm.pass2.value) {
+                alert("패스워드가 일치하지 않습니다.");
+                frm.pass1.value='';
+                frm.pass2.value='';
+                frm.pass1.focus();
+                return false;
+            }
+            if(frm.name.value=='') {alert("이름을 입력해주세요.");frm.name.focus();return false;}
+
+            //아이디는 8~12자로 입력
+            if(!(frm.id.value.length>=8 && frm.id.value.length<=12)) {
+                alert("아이디는 8~12자 사이만 가능합니다.");
+                frm.id.value=''; //잘못된 입력값이므로 지워준다.
+                frm.id.focus(); //재입력해야하므로 포커싱한다.
+                return false; //서버로 전송을 중단해야 하므로 false를 반환
+            }
+            //아이디는 숫자로 시작할 수 없음
+            /*
+                0과 9의 아스키코드 값은 각각 48,57이므로 아이디의 첫글자가 만약
+                이 사이에 있다면 숫자이므로 사용할 수 없는 아이디가 된다.
+            */
+            if(frm.id.value[0].charCodeAt(0)>=48 && frm.id.value[0].charCodeAt(0)<=57) {
+                alert("아이디는 숫자로 시작할 수 없습니다.");
+                frm.id.value='';
+                frm.id.focus();
+                return false;
+            }
+            //아이디는 영문+숫자의 조합으로만 사용할 수 있다.
+            /*
+                아이디를 구성하는 각 문자가 소문자 a~z, 대문자A~Z, 숫자0~9사이가 아니라면
+                잘못된 문자가 포함된 경우이므로 전송을 중단해야 한다.
+            */
+            for(var i=0 ; i<frm.id.value.length ; i++) { //아이디의 길이만큼 반복
+                if(!((frm.id.value[i]>='a' && frm.id.value[i]<='z') ||
+                        (frm.id.value[i]>='A' && frm.id.value[i]<='Z') ||
+                        (frm.id.value[i]>='0' && frm.id.value[i]<='9'))){
+                    alert('아이디는 영문과 숫자의 조합으로만 사용할 수 있습니다.');
+                    frm.id.value='';
+                    frm.id.focus();
+                    return false;
+                }
+            }
+
+            //폼 검증이 끝난 후 서버로 전송 직후 로딩 이미지를 띄워준다.
+            document.getElementById("id_loading").style.display = 'block';
+            return false;
+        }
+
+        function inputEmail(frm) {
+            var domain = frm.email_sel.value;
+            if(domain==''){ //--선택--부분을 선택했을때
+                frm.email1.value = ''; //모든 입력값을 지운다.
+                frm.email2.value = '';
+            }
+            else if(domain=='직접입력'){ //'직접입력'을 선택했을때
+                frm.email2.readOnly = false; //사용자가 입력해야 하므로 readOnly속성을 해제한다. 
+                frm.email2.value = ''; 
+                frm.email2.focus();
+            }
+            else { //도메인을 선택했을때
+                frm.email2.value = domain; //선택한 도메인을 입력한다.
+                frm.email2.readOnly = true; //입력된 값을 수정할 수 없도록 readOnly속성을 활성화한다.
+            }
+        }
+        /*
+        thisObj 엘리먼트에 inputLen 글자를 입력하면 nextName 엘리먼트로
+        포커스를 이동시킨다.
+        */
+        function focusMove(thisObj, nextName, inputLen) {
+            //현재 입력된 글자수
+            var strLen = thisObj.value.length;
+            if(strLen >= inputLen) {
+                //alert('포커스 이동');
+                /*
+                eval()함수는 문자열로 주어진 인수를 JS코드로 해석하여 실행한다.
+                document.myform => 문서객체를 이용한 DOM객체(form)
+                nextName => 문자열
+                따라서 객체와 문자열을 바로 연결하면 에러가 발생한다.
+                해결책은 객체를 문자열로 변경한 후 eval()함수를 통해 JS코드로 재변환한다.
+                */
+                eval('document.myform.'+nextName).focus();
+            }
+        }
+
+    </script>
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function addressFind() {
+
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                    // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                    var frm = document.myform;
+                    frm.zipcode.value = data.zonecode; //12345 (우편번호)
+                    frm.addr1.value = data.address; //서울시 금천구 가산동 (기본주소)
+                    frm.addr2.focus();
+                }
+            }).open();
+        }
+    </script>
 </head>
 <body>
-    <form name="myform" action="./join_write_end1stp.php" method="POST" onsubmit="return validate();">
+    <form name="myform" action="" method="" onsubmit="return formValidate(this);">
         <table class="userTable">
             <colgroup>
                 <col width="130px" />
@@ -67,9 +176,21 @@
                     <label><input type="radio" name="sex" value="male" checked />남자</label>
                     <label><input type="radio" name="sex" value="female" />여자</label>
                     <span style="margin-left:20px;"></span>
-                    <input type="text" name="birth1" value="" class="userInput w40" maxlength="4" /><span style="margin:0 5px 0 1px;">년</span>
-                    <input type="text" name="birth2" value="" class="userInput w20" maxlength="2" /><span style="margin:0 5px 0 1px;">월</span>
-                    <input type="text" name="birth3" value="" class="userInput w20"maxlength="2" /><span style="margin:0 15px 0 1px;">일</span>
+                    <input type="text" name="birth1" value="" class="userInput w40" maxlength="4" />
+                    <!-- <select name="birth1" class="userSelect w60">
+                        <option value="">----</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                    </select> -->
+                    <span style="margin:0 5px 0 1px;">년</span>
+                    <input type="text" name="birth2" value="" class="userInput w20" maxlength="2" />
+                    <span style="margin:0 5px 0 1px;">월</span>
+                    <input type="text" name="birth3" value="" class="userInput w20"maxlength="2" />
+                    <span style="margin:0 15px 0 1px;">일</span>
                     <span style="margin:0 0 0 3px;color:#888888;">(예 : 2000년 01월 31일)</span>
                 </td>
             </tr>
@@ -79,7 +200,7 @@
                     <input type="text" name="email1" value="" class="userInput w100" />
                     <span style="font-size:16px;">＠</span>
                     <input type="text" name="email2" value="" class="userInput w100" />
-                    <select name="email_sel" onchange="" class="userSelect w100">
+                    <select name="email_sel" onchange="inputEmail(this.form);" class="userSelect w100">
                         <option value=""> -- 선택 --</option>
                         <option value="naver.com">naver.com</option>
                         <option value="nate.com">nate.com</option>
@@ -100,7 +221,7 @@
             <tr>
                 <td class="userTit" rowspan="3"><span style="margin-left:10px;"></span> 주소</td>
                 <td class="userVal">
-                    <button type="button" class="btn_search" onClick="">주소찾기</button>
+                    <button type="button" class="btn_search" onClick="addressFind();">주소찾기</button>
                     <input type="text" name="zipcode" maxlength="10" value="" class="userInput w50" /> (우편번호)
                 </td>
             </tr>
@@ -119,17 +240,33 @@
             <tr>
                 <td class="userTit"><span style="margin-left:10px;"></span> 전화번호</td>
                 <td class="userVal">
-                    <input type="text" name="phone1" value="" class="userInput w30" maxlength="3" /> -
-                    <input type="text" name="phone2" value="" class="userInput w40" maxlength="4" /> -
-                    <input type="text" name="phone3" value="" class="userInput w40" maxlength="4" />
+                    <!-- <input type="text" name="phone1" value="" class="userInput w30" maxlength="3" /> - -->
+                    <select name="phone1" class="userSelect" onchange="document.myform.phone2.focus();">
+                        <option value="">--</option>
+                        <option value="02">02</option>  
+                        <option value="031">031</option>
+                        <option value="032">032</option>
+                    </select> -
+                    <input type="text" name="phone2" onkeyup="focusMove(this,'phone3',4);" 
+                        class="userInput w40" maxlength="4" /> -
+                    <input type="text" name="phone3" onkeyup="focusMove(this,'hphone1',4);"
+                        class="userInput w40" maxlength="4" />
                 </td>
             </tr>
             <tr>
                 <td class="userTit"><span class="c_imp">*</span> 휴대전화</td>
                 <td class="userVal">
-                    <input type="text" name="hphone1" value="" class="userInput w30" maxlength="3" /> -
-                    <input type="text" name="hphone2" value="" class="userInput w40" maxlength="4" /> -
-                    <input type="text" name="hphone3" value="" class="userInput w40" maxlength="4" />
+                    <!-- <input type="text" name="hphone1" value="" class="userInput w30" maxlength="3" /> - -->
+                    <select name="hphone1" class="userSelect" onchange="document.myform.hphone2.focus();">
+                        <option value="">--</option>
+                        <option value="010">010</option>  
+                        <option value="011">011</option>
+                        <option value="012">012</option>
+                    </select> -
+                    <input type="text" name="hphone2" onkeyup="focusMove(this,'hphone3',4);" 
+                        class="userInput w40" maxlength="4" /> -
+                    <input type="text" name="hphone3" onkeyup="focusMove(this,'etc_no1',4);" 
+                        class="userInput w40" maxlength="4" />
                     <span style="margin-left:20px;"></span>
                     <label><input type="radio" name="sms" value="yes" checked />SMS 수신허용</label>
                     <label><input type="radio" name="sms" value="no" />SMS 수신불가</label>
@@ -174,7 +311,7 @@
             </tr>
         </table>
         <div id="id_loading">
-            <!-- <img src="../images/loading.gif" style="width:40%;" /> -->
+            <img src="../images/loading.gif" style="width:40%;" />
         </div>
     </form>
 </body>
