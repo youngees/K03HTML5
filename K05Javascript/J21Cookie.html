@@ -15,16 +15,31 @@
         var setCookie = function(name, value, exp) { //(쿠키명, 쿠키값, 유효기간)
             var date = new Date();
             //유효시간은 내일로 설정된다. 
+            console.log("1970-01-01부터 지금까지의 초(타임스탬프)", date.getTime());
             date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
             console.log("유효시간",date.toUTCString());
             //쿠키생성 : 쿠키명=쿠키값;유효시간;적용될경로;
             document.cookie = name+'='+value+';expires='+date.toUTCString()+';path=/';
         };
+
+
         //쿠키 읽기 기본
         /*
             쿠키는 ;(세미콜론)으로 구분되므로 1차 split()하고 
             =(이퀄)로 2차 split()하여 쿠키값을 가져온다.
         */
+        /*
+            쿠키생성 => name+'='+value+';expires='+date.toUTCString()+';path=/';
+            우리가 생성한 쿠키 => popup1=팝업창열기;expires=2020-10-14;path=/
+            세미콜론으로 1차 split =>  (!split은 항상 배열형태로 나눠짐!)
+                                [0] ->   popup1=팝업창열기 
+                                [1] ->   expires=2020-10-14 
+                                [2] ->   path=/   
+            이퀄로 2차 split => 
+                                [0]에 필요한 값이 있으므로
+                                    쿠키명 : popup1
+                                    쿠키값 : 팝업창열기        
+            */
         var getCookie = function (name) {
             var values = document.cookie.split(";");
             for(var i=0 ; i<values.length ; i++) {
@@ -71,7 +86,28 @@
             alert('쿠키가 삭제되었습니다.');
             location.reload();
         }
+
+        function closeWin(){
+            document.getElementById("popupWin").style.display = "none";
+            setCookie('popupWin', 'off', 1);
+        }
+        window.onload = function() {
+            var popupWinValue = getCookie('popupWin');
+            if(popupWinValue=='off') {
+                document.getElementById("popupWin").style.display = "none";
+            }
+            else {
+                document.getElementById("popupWin").style.display = "block";
+            }
+        }
     </script>
+    <style>
+        .popupWin {
+            width: 200px; height: 250px; background-color:blueviolet;
+            color: greenyellow; font-size: 1em; text-align: center;
+            line-height: 150px; position: absolute; top: 150px; left: 100px;
+        }
+    </style>
 </head>
 <body>
     <h2>쿠키 생성 하기</h2>
@@ -84,5 +120,11 @@
         <button type="button" onclick="readCookie();">쿠키읽기</button>
         <button type="button" onclick="deleteCookie();">쿠키삭제</button>
     </form>
+
+    <div class="popupWin" id="popupWin" style="display:none;">
+        오늘의 팝업창 
+        <br>
+        <input type="checkbox" id="popChk" onclick="closeWin();"> 오늘 하루 열지않음
+    </div>
 </body>
 </html>
