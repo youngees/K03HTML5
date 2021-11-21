@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpDownGame.html</title>
+    <style>
+        #count {
+            font-size: 2em;
+        }
+    </style>
+    <script>
+        var ran = Math.floor(Math.random()*100+1);
+        var counts = 0;
+        alert(ran);
+
+        function upDown() {
+            var game = document.getElementById("num");
+            var checkNum = document.getElementById("checkNum");
+            var img = document.getElementById("image");
+            var count = document.getElementById("count");
+
+            if(game.value<1 || game.value>100) {
+                alert("1~100사이의 정수를 입력해주세요.");
+                img.src = "../images/error.jpg";
+                game.value = "";
+            }
+            else if (!(game.value[0].charCodeAt(0)>=48 && game.value[0].charCodeAt(0)<=57)) {
+                alert("숫자만 입력해 주세요.");
+                img.src = "../images/error.jpg";
+                game.value="";
+                game.focus();
+            }
+            else {
+                if(game.value > ran) {
+                    img.src = "../images/down.jpg";
+                }
+                else if(game.value < ran) {
+                    img.src = "../images/up.jpg";
+                }
+                else if(game.value== ran) {
+                    var resetNum = document.getElementById("resetNum");
+                    alert("정답입니다!");
+                    img.src = "../images/answer.jpeg";
+                    resetNum.style.display = "block";
+                }
+                counts++;
+                count.innerHTML = counts;
+            }
+            
+            if(counts>7) {
+                alert("시도횟수가 초과되었습니다. 게임을 재시작합니다.");
+                reset();
+            }
+        }
+
+        function reset(){
+            location.reload();
+        }
+    </script>
+</head>
+<body>
+    <h2>업다운 게임</h2>
+    <h3>1~100사이의 숫자를 입력하세요.</h3>
+    <h3>시도횟수: <span id="count">0</span>회</h3>
+    
+    숫자입력 : <input type="text" size="3" id="num" value="">
+    <input type="button" value="확인" id="checkNum" onclick="upDown();">  
+    <input type="button" value="새로고침" id="resetNum" onclick="reset();" style="display: none;"> 
+    <br>
+
+    <img src="../images/updowngame.jpg"  id="image" alt="img" width="200px">
+</body>
+</html>
