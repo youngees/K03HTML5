@@ -13,6 +13,7 @@
     <script>
         var ran = Math.floor(Math.random()*100+1);
         var counts = 0;
+        //console.log("ranNum",ran);
         alert(ran);
 
         function upDown() {
@@ -25,6 +26,7 @@
                 alert("1~100사이의 정수를 입력해주세요.");
                 img.src = "../images/error.jpg";
                 game.value = "";
+                game.focus();
             }
             else if (!(game.value[0].charCodeAt(0)>=48 && game.value[0].charCodeAt(0)<=57)) {
                 alert("숫자만 입력해 주세요.");
@@ -43,13 +45,14 @@
                     var resetNum = document.getElementById("resetNum");
                     alert("정답입니다!");
                     img.src = "../images/answer.jpeg";
-                    resetNum.style.display = "block";
+                    resetNum.style.display = "block"; //block은 한 블럭을 차지하기 때문에 밑으로 떨어짐
+                    //resetNum.style.display = "inline"; //이렇게 해야 '확인'버튼 옆에 뜸
                 }
                 counts++;
                 count.innerHTML = counts;
             }
             
-            if(counts>7) {
+            if(counts>=7) {
                 alert("시도횟수가 초과되었습니다. 게임을 재시작합니다.");
                 reset();
             }
