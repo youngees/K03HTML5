@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>업다운게임</title>
+</head>
+<body>    
+    <h2>업다운게임</h2>    
+    <h3>1~100사이의 숫자를 입력하세요</h3>
+    <h4>시도횟수 : <span id='tryCount' style="font-size: 2em;">0</span>회</h4>
+    <div>
+        숫자입력 : <input type="number" id="inputNum" style="width:50px;" >
+        <button type="button" onclick="gameStart();">확인</button>
+
+        <button type="button" onclick="location.reload();" id="reload">새로고침</button>
+
+        <p>
+            <img src="../images/updowngame.jpg" width="200" id="gameImg">
+        </p>        
+    </div>
+
+    <script>
+        var gameCount=0;
+        /*
+        난수 생성 구간을 1(최소) ~ 100(최대)로 설정했다면..
+        (Math.random() * 최대값) + 최소값
+        해당 구간의 난수가 생성된다. 
+        */
+        var comNumber = parseInt(Math.random()*100) + 1;
+        console.log("comNumber", comNumber);
+        alert(comNumber);
+
+        var gameImg = document.getElementById("gameImg");
+        var tryCount = document.getElementById("tryCount"); 
+        //새로고침 버튼 숨김처리
+        document.getElementById("reload").style.display = "none";          
+ 
+        function gameStart(){
+            
+            if(gameCount>=7){
+                alert("시도횟수가 초과하였습니다. 게임을 재시작 합니다.");
+                //페이지에 대한 새로고침. F5을 누른것과 동일하다. 
+                location.reload();
+                return;
+            }
+            var inputNum = document.getElementById("inputNum").value;
+            //입력값이 있는지 확인
+            if(!inputNum){
+                alert("정수를 입력해주세요");
+                document.getElementById("inputNum").focus();
+                document.getElementById("inputNum").value = 0;
+            }
+            else if(inputNum<=0 || inputNum>100){
+                alert("1~100 사이의 정수를 입력해주세요.");
+                document.getElementById("inputNum").value = 1;
+                gameImg.src = "../images/error.jpg";  
+            }
+            else{
+                //입력값이 정상범위에 있을때
+                gameCount++;//게임카운트 1 증가
+                if(comNumber==inputNum){
+                    alert("정답입니다.");      
+                    gameImg.src = "../images/answer.jpeg";     
+                    document.getElementById("reload").style.display = "inline";          
+                }
+                else if(comNumber>inputNum){
+                    //up
+                    gameImg.src = "../images/up.jpg";
+                    console.log("up");
+                    tryCount.innerHTML = gameCount;
+                }
+                else if(comNumber<inputNum){
+                    //down
+                    gameImg.src = "../images/down.jpg";
+                    console.log("down");
+                    tryCount.innerHTML = gameCount;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
