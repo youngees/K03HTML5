@@ -14,9 +14,16 @@
         .pink {color: pink;}
     </style>
     <script>
+        /*
+        addClass() : 선택한 요소에 하나 이상의 CSS의 클래스를 추가한다.
+        removeClass() : 선택한 요소에서 클래스를 제거한다.
+        toggleClass() : 선택한 요소에서 클래스를 추가 및 제거를 반복한다.
+        */
         $(function(){
             $('#addBtn').click(function(){
+                //다중선택자를 통해 2개의 요소를 선택
                 $('h1,p').addClass("blue");
+                //아이디선택자를 통해 div를 선택
                 $('#div1').addClass("important");
             });
             $('#removeBtn').click(function(){
